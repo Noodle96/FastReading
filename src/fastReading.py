@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QMessageBox, QLabel, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QMessageBox, QLabel, QFileDialog, QWidget, QHBoxLayout, QVBoxLayout, QFrame
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QPainter, QPen, QColor
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
 
         # Crear un menú para "File"
         file_menu = menubar.addMenu("&File")
-        file_menu.addAction(open_image_action)
+        # file_menu.addAction(open_image_action)
         file_menu.addAction(close_action)
 
          # Crear una barra de menú adicional para "About Us"
@@ -51,9 +51,27 @@ class MainWindow(QMainWindow):
         # ------------------ -End Menú- ------------------ #
 
         # Crear un widget para mostrar la imagen
-        self.image_label = QLabel()
-        self.image_label.setAlignment(Qt.AlignCenter)
-        self.setCentralWidget(self.image_label)
+        # self.image_label = QLabel()
+        # self.image_label.setAlignment(Qt.AlignCenter)
+        # self.setCentralWidget(self.image_label)
+
+         # Crear un layout horizontal para dividir la ventana
+        layout = QHBoxLayout()
+        
+        # Crear dos marcos para las partes izquierda y derecha de la ventana
+        left_frame = QFrame()
+        right_frame = QFrame()
+        left_frame.setStyleSheet("background-color: #f0f0f0;")
+        right_frame.setStyleSheet("background-color: #ffffff;")
+
+        # Agregar los marcos al layout horizontal
+        layout.addWidget(left_frame)
+        layout.addWidget(right_frame)
+
+        # Establecer el layout como el layout principal de la ventana
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
 
     # ------------------ -Begin Triggered- ------------------ #
     def show_about_message(self):
