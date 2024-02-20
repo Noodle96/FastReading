@@ -1,0 +1,10 @@
+go root:
+  python3 -m venv .
+to activate:
+  source bin/activate
+to desactivate:
+  desactivate
+
+inside environment install:
+  pip install PyQt5
+

@@ -1,0 +1,32 @@
+# Archivos y directorios generados por entornos virtuales
+venv/
+env/
+ENV/
+
+# Archivos de caché y compilados
+*.pyc
+__pycache__/
+
+# Carpeta de configuración de entorno virtual de pip
+.pipenv/
+
+# Carpeta de configuración de entorno virtual de poetry
+.pyenv/
+
+# Carpeta de configuración de entorno virtual de pipenv
+.poetry/
+
+# Carpeta de configuración de entorno virtual de pipenv
+.venv/
+
+# Carpeta de configuración de entorno virtual de pipenv
+.ansible/
+
+# Carpeta de configuración de entorno virtual de pipenv
+.salt/
+# Directorios de entornos virtuales
+bin/
+include/
+lib/
+lib64/
+pyvenv.cfg
