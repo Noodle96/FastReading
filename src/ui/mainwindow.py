@@ -1,6 +1,6 @@
 # mainwindow.py
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QMessageBox, QLabel, QFileDialog, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QScrollArea, QSizePolicy
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QMessageBox, QLabel, QFileDialog, QWidget, QHBoxLayout, QVBoxLayout, QFrame, QScrollArea, QSizePolicy, QTextEdit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
 import fitz
@@ -71,6 +71,7 @@ class MainWindow(QMainWindow):
         # Layout principal para el widget principal
         main_layout = QHBoxLayout(main_widget)
 
+        #izquierda
         # Frame izquierdo para el PDF y el scrollbar
         left_frame = QFrame()
         left_layout = QVBoxLayout(left_frame)
@@ -91,13 +92,14 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(pdf_scroll_area)
         left_frame.setLayout(left_layout)
 
+        # DERECHO
         # Frame derecho para otros elementos de la interfaz de usuario
+        # Marco derecho para mostrar el texto de la página actual
         right_frame = QFrame()
         right_layout = QVBoxLayout(right_frame)
-        # Agregar otros elementos de la interfaz de usuario al right_layout
-
-
-
+        self.text_edit = QTextEdit()  # Widget de texto para mostrar el texto de la página actual
+        right_layout.addWidget(self.text_edit)
+        right_frame.setLayout(right_layout)
 
 
         # Agregar los frames al layout principal
@@ -159,16 +161,24 @@ class MainWindow(QMainWindow):
 
         # Crear un visor de PDF utilizando la biblioteca fitz
         doc = fitz.open(pdf_path)
-
+        list_images = []
         for page_num in range(len(doc)):
             page = doc.load_page(page_num)
             pixmap = page.get_pixmap()
             label = QLabel()
             label.setPixmap(QPixmap.fromImage(QImage(pixmap.samples, pixmap.width, pixmap.height, pixmap.stride, QImage.Format_RGB888)))
-
+            # label.setScaledContents(True)  # Escalar contenido para que ocupe todo el espacio disponible
             self.pdf_layout.addWidget(label)
 
+            # Recuperar el texto de la página actual
+            text = page.get_text()
+            self.text_edit.setPlainText(text)  # Mostrar el texto en el widget de texto
+            list_images.append((page_num,label))
+
+        # self.text_edit.textChanged.connect(self.handle_text_changed)  # Volver a conectar la señal de cambio de texto
         doc.close()
+
+
 
 
         # Establecer el layout de las imágenes dentro del área de desplazamiento
